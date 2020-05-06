@@ -1,4 +1,4 @@
 from modules.get_information import FaceitAPI
 
 API = FaceitAPI()
-print(API.get_list_matches('5a2b6608-8d0d-43fd-b48f-c9cc9025f969'))
+print(API.get_past_matches_url('1-8bf2004c-347e-4856-8e42-98757de1fb8c', 'Ave_Wycc220'))

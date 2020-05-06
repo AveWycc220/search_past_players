@@ -74,3 +74,24 @@ class FaceitAPI():
             else:
                 print(F"Error : {res.status_code}")
                 return None
+
+    def get_past_matches_url(self, room_id, main_name):
+        """ Method for getting matches_url """
+        names = self.get_players_names(room_id)
+        for i in range(0, 10):
+            if names[i] == main_name:
+                main_index = i
+        players_id = list()
+        for i in range(0, 10):
+            players_id.append(self.get_player_id(names[i]))
+        list_matches_id = list()
+        for i in range(0, 10):
+            list_matches_id.append(self.get_list_matches(players_id[i]))
+        for i in range(0, 10):
+            if i != main_index:
+                same_matches_id = list(set(list_matches_id[main_index]) & set(list_matches_id[i]))
+        list_url = list()
+        for i, _ in enumerate(same_matches_id):
+            list_url.append(F'https://www.faceit.com/ru/csgo/room/{same_matches_id[i]}')
+        return list_url
+            
