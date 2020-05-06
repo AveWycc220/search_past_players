@@ -1,1 +1,1 @@
-""" Package for FaceitAPI """ 
+""" Package for FaceitAPI """
