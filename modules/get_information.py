@@ -53,3 +53,24 @@ class FaceitAPI():
             else:
                 print(F"Error : {res.status_code}")
                 return None
+
+    def get_list_matches(self, player_id):
+        """ Get list_matches by player_id """
+        game = 'csgo'
+        limit = 100
+        api_url = F"{self.__base_url}/players/{player_id}/history?game={game}&limit={limit}"
+        res = requests.get(api_url, headers=self.__headers)
+        if res.status_code == 404:
+            print("Wrong player_id")
+        else:
+            if res.status_code == 200:
+                info = json.loads(res.content.decode('utf-8'))
+                list_matches_id = list()
+                i = 0
+                while i < len(info['items']):
+                    list_matches_id.append(info['items'][i]['match_id'])
+                    i += 1
+                return list_matches_id
+            else:
+                print(F"Error : {res.status_code}")
+                return None

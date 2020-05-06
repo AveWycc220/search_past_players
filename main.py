@@ -1,4 +1,4 @@
 from modules.get_information import FaceitAPI
 
 API = FaceitAPI()
-print(API.get_players_names('1-6b6ce182-1a8a-465f-97ab-98ca618a9148'))
+print(API.get_list_matches('5a2b6608-8d0d-43fd-b48f-c9cc9025f969'))
