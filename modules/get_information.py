@@ -69,10 +69,8 @@ class FaceitAPI():
             if res.status_code == 200:
                 info = json.loads(res.content.decode('utf-8'))
                 list_matches_id = list()
-                i = 0
-                while i < len(info['items']):
+                for i, _ in enumerate(info['items']):
                     list_matches_id.append(info['items'][i]['match_id'])
-                    i += 1
                 return list_matches_id
             else:
                 print(F"Error : {res.status_code}")
@@ -101,11 +99,16 @@ class FaceitAPI():
         if list_matches_id is None:
             print(F'self.get_list_matches - {self.get_list_matches.__doc__}')
             return None
+        same_matches_id = list()
+        past_players_name = list()
         for i in range(0, 10):
             if i != main_index and i != friend_index:
-                same_matches_id = list(set(list_matches_id[main_index]) & set(list_matches_id[i]))
+                temp = set(list_matches_id[main_index]) & set(list_matches_id[i])
+                if len(temp) > 1:
+                    same_matches_id.append(temp)
+                    past_players_name.append(names[i])
         list_url = list()
         for i, _ in enumerate(same_matches_id):
-            list_url.append(F'https://www.faceit.com/en/csgo/room/{same_matches_id[i]}')
-        return list_url
-            
+            for j in same_matches_id[i]:
+                list_url.append(F'https://www.faceit.com/en/csgo/room/{j}')
+        return list_url, past_players_name
